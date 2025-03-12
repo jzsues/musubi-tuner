@@ -3,3 +3,10 @@ __pycache__/
 venv/
 logs/
 uv.lock
+train-dataset/
+train-log/
+train-cache/
+train-output/
+infer_inputs/
+infer_output/
+ckpts/

@@ -1,0 +1,20 @@
+# resolution, caption_extension, target_frames, frame_extraction, frame_stride, frame_sample, 
+# batch_size, num_repeats, enable_bucket, bucket_no_upscale should be set in either general or datasets
+# num_repeats is also available for video dataset, example is not shown here
+
+# general configurations
+[general]
+resolution = [480, 832]
+caption_extension = ".txt"
+batch_size = 1
+num_repeats = 5
+enable_bucket = true
+bucket_no_upscale = true
+
+[[datasets]]
+video_directory = "/workspace/musubi-tuner/train-dataset"
+cache_directory = "/workspace/musubi-tuner/train-cache" # recommended to set cache directory
+target_frames = [1, 33, 65, 81]
+frame_extraction = "head"
+
+# other datasets can be added here. each dataset can have different configurations
