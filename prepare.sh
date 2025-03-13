@@ -1,9 +1,13 @@
-dataset_cfg=/workspace/musubi-tuner/dataset.toml
-vae_path=/workspace/musubi-tuner/ckpts/wan_2.1_vae.safetensors
-t5_path=/workspace/musubi-tuner/ckpts/models_t5_umt5-xxl-enc-bf16.pth
-clip_path=/workspace/musubi-tuner/ckpts/models_clip_open-clip-xlm-roberta-large-vit-huge-14.pth
+base_dir=/home/picaa/workspace/musubi-tuner
+model_dir=/home/picaa/models/Wan-AI/Wan2.1-I2V-14B-480P
 
-output=/workspace/musubi-tuner/train-output
+
+dataset_cfg=$base_dir/dataset.toml
+t5_path=$model_dir/models_t5_umt5-xxl-enc-bf16.pth
+vae_path=$model_dir/wan_2.1_vae.safetensors
+clip_path=$model_dir/models_clip_open-clip-xlm-roberta-large-vit-huge-14.pth
+
+output=$base_dir/train-output
 
 python wan_cache_latents.py --dataset_config $dataset_cfg --vae $vae_path --clip $clip_path
 
