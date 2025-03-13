@@ -1,15 +1,18 @@
 
 
-dataset_cfg=/workspace/musubi-tuner/dataset.toml
-t5_path=/workspace/musubi-tuner/ckpts/models_t5_umt5-xxl-enc-bf16.pth
-dit_path=/workspace/musubi-tuner/ckpts/wan2.1_i2v_480p_14B_bf16.safetensors
-vae_path=/workspace/musubi-tuner/ckpts/wan_2.1_vae.safetensors
-t5_path=/workspace/musubi-tuner/ckpts/models_t5_umt5-xxl-enc-bf16.pth
-clip_path=/workspace/musubi-tuner/ckpts/models_clip_open-clip-xlm-roberta-large-vit-huge-14.pth
+base_dir=/home/picaa/workspace/musubi-tuner
+model_dir=/home/picaa/models/Wan-AI/Wan2.1-I2V-14B-480P
 
-output=/workspace/musubi-tuner/train-output
-logs=/workspace/musubi-tuner/train-log
-prompt=/workspace/musubi-tuner/sample_prompt.txt
+
+dataset_cfg=$base_dir/dataset.toml
+t5_path=$model_dir/models_t5_umt5-xxl-enc-bf16.pth
+dit_path=$model_dir/wan2.1_i2v_480p_14B_bf16.safetensors
+vae_path=$model_dir/wan_2.1_vae.safetensors
+clip_path=$model_dir/models_clip_open-clip-xlm-roberta-large-vit-huge-14.pth
+
+output=$base_dir/train-outputs
+logs=$base_dir/train-logs
+prompt=$base_dir/sample_prompt.txt
 
 accelerate launch --num_cpu_threads_per_process 1 --mixed_precision bf16 wan_train_network.py \
     --task i2v-14B \
@@ -18,7 +21,8 @@ accelerate launch --num_cpu_threads_per_process 1 --mixed_precision bf16 wan_tra
     --dataset_config $dataset_cfg \
     --sage_attn \
     --mixed_precision bf16 \
-    --optimizer_type adamw \
+    --fp8_base \
+    --optimizer_type adamw8bit \
     --optimizer_args weight_decay=0.01 betas=0.9,0.999 eps=1e-8 \
     --learning_rate 2e-5 \
     --gradient_checkpointing \
